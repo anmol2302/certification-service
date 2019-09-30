@@ -12,4 +12,7 @@ public interface IResponseMessage extends IUserResponseMessage, IOrgResponseMess
   String INTERNAL_ERROR = "INTERNAL_ERROR";
   String UNAUTHORIZED = "UNAUTHORIZED";
   String ID_ALREADY_EXISTS="ID_ALREADY_EXISTS";
+  String MISSING_MANADATORY_PARAMS="MANDATORY PARAM {0} IS MISSING";
+  String DATA_TYPE_ERROR="{0} PARAM SHOULD BE OF TYPE {1}";
+  String EMPTY_MANDATORY_PARAM="value can not be empty for mandatory param {0}";
 }

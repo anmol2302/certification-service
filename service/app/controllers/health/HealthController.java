@@ -24,17 +24,4 @@ public class HealthController extends BaseController {
     CompletionStage<Result> response = handleRequest();
     return response;
   }
-
-  /**
-   * This action method is responsible to check user-service health
-   *
-   * @return a CompletableFuture of success response
-   */
-  public CompletionStage<Result> getUserOrgServiceHealth(String health) {
-    CompletableFuture<String> cf = new CompletableFuture<>();
-    cf.complete(dummyResponse);
-    return service.equalsIgnoreCase(health)
-        ? cf.thenApplyAsync(Results::ok)
-        : cf.thenApplyAsync(Results::badRequest);
-  }
 }

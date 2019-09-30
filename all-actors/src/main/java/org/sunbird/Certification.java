@@ -17,7 +17,7 @@ public class Certification extends BaseActor {
     private static ICertService certService=new CertsServiceImpl();
     @Override
     public void onReceive(Request request) throws BaseException {
-        logger.info("Certification:onRecieve:request arrived with operation"+request.getOperation());
+        logger.info("Certification:onReceive:request arrived with operation"+request.getOperation());
         add(request);
     }
     private void add(Request request) throws BaseException {

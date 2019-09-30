@@ -1,7 +1,6 @@
 package org.sunbird.builders;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import java.util.Map;
  * @author anmolgupta
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Certificate {
 
     private String id;

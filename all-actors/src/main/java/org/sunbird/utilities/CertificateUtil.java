@@ -1,5 +1,6 @@
 package org.sunbird.utilities;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.sunbird.JsonKeys;
 import org.sunbird.common.ElasticSearchHelper;
@@ -17,11 +18,8 @@ public class CertificateUtil {
         logger.info("CertificateUtil:isIdPresent:get id to search in ES:"+certificateId);
         Map<String,Object> response = (Map)ElasticSearchHelper.getResponseFromFuture(elasticSearchService.getDataByIdentifier(JsonKeys.CERT,certificateId));
         logger.info("CertificateUtil:isIdPresent:got response from ES:"+response);
-        if (null != response && null != response.get(JsonKeys.RESPONSE)) {
-            List responseList = (List) response.get(JsonKeys.RESPONSE);
-            if (!responseList.isEmpty()) {
+        if (MapUtils.isNotEmpty(response)) {
                 return true;
-            }
         }
         return false;
     }

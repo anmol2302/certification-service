@@ -48,7 +48,7 @@
         "_doc": {
             "dynamic": false,
             "properties": {
-                "userId": {
+                "id": {
                     "type": "text",
                     "fields": {
                         "raw": {
@@ -80,7 +80,16 @@
                     "search_analyzer": "cs_search_analyzer",
                     "fielddata": true
                 },
-                "otherLink": {
+                "course": {
+                    "type": "object"
+                },
+                "certData": {
+                    "type": "object"
+                },
+                "rawData": {
+                    "type": "object"
+                },
+                "recipientId": {
                     "type": "text",
                     "fields": {
                         "raw": {
@@ -95,46 +104,6 @@
                     "analyzer": "cs_index_analyzer",
                     "search_analyzer": "cs_search_analyzer",
                     "fielddata": true
-                },
-                "id": {
-                    "type": "text",
-                    "fields": {
-                        "raw": {
-                            "type": "text",
-                            "analyzer": "keylower",
-                            "fielddata": true
-                        }
-                    },
-                    "copy_to": [
-                        "all_fields"
-                    ],
-                    "analyzer": "cs_index_analyzer",
-                    "search_analyzer": "cs_search_analyzer",
-                    "fielddata": true
-                },
-                "identifier": {
-                    "type": "text",
-                    "fields": {
-                        "raw": {
-                            "type": "text",
-                            "analyzer": "keylower",
-                            "fielddata": true
-                        }
-                    },
-                    "copy_to": [
-                        "all_fields"
-                    ],
-                    "analyzer": "cs_index_analyzer",
-                    "search_analyzer": "cs_search_analyzer",
-                    "fielddata": true
-                },
-                "updatedAt": {
-                    "type": "date",
-                    "fields": {
-                        "raw": {
-                            "type": "date"
-                        }
-                    }
                 },
                 "createdAt": {
                     "type": "date",
@@ -144,10 +113,86 @@
                         }
                     }
                 },
-                "store": {
-                    "type": "object"
+                "updatedAt": {
+                    "type": "date",
+                    "fields": {
+                        "raw": {
+                            "type": "date"
+                        }
+                    }
+                },
+                "pdfUrl": {
+                    "type": "text",
+                    "fields": {
+                        "raw": {
+                            "type": "text",
+                            "analyzer": "keylower",
+                            "fielddata": true
+                        }
+                    },
+                    "copy_to": [
+                        "all_fields"
+                    ],
+                    "analyzer": "cs_index_analyzer",
+                    "search_analyzer": "cs_search_analyzer",
+                    "fielddata": true
+                },
+                "jsonUrl": {
+                    "type": "text",
+                    "fields": {
+                        "raw": {
+                            "type": "text",
+                            "analyzer": "keylower",
+                            "fielddata": true
+                        }
+                    },
+                    "copy_to": [
+                        "all_fields"
+                    ],
+                    "analyzer": "cs_index_analyzer",
+                    "search_analyzer": "cs_search_analyzer",
+                    "fielddata": true
+                },
+                "createdBy": {
+                    "type": "text",
+                    "fields": {
+                        "raw": {
+                            "type": "text",
+                            "analyzer": "keylower",
+                            "fielddata": true
+                        }
+                    },
+                    "copy_to": [
+                        "all_fields"
+                    ],
+                    "analyzer": "cs_index_analyzer",
+                    "search_analyzer": "cs_search_analyzer",
+                    "fielddata": true
+                },
+                "updatedBy": {
+                    "type": "text",
+                    "fields": {
+                        "raw": {
+                            "type": "text",
+                            "analyzer": "keylower",
+                            "fielddata": true
+                        }
+                    },
+                    "copy_to": [
+                        "all_fields"
+                    ],
+                    "analyzer": "cs_index_analyzer",
+                    "search_analyzer": "cs_search_analyzer",
+                    "fielddata": true
+                },
+                "isRevoked": {
+                    "type": "boolean",
+                    "fields": {
+                        "raw": {
+                            "type": "boolean"
+                        }
+                    }
                 }
-            }
-        }
+            }        }
     }
 }

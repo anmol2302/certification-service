@@ -11,4 +11,5 @@ public interface IResponseMessage extends IUserResponseMessage, IOrgResponseMess
   String INVALID_OPERATION_NAME = "INVALID_OPERATION_NAME";
   String INTERNAL_ERROR = "INTERNAL_ERROR";
   String UNAUTHORIZED = "UNAUTHORIZED";
+  String ID_ALREADY_EXISTS="ID_ALREADY_EXISTS";
 }

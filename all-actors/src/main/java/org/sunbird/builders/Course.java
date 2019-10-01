@@ -37,6 +37,17 @@ public class Course {
         return introUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "batchId='" + batchId + '\'' +
+                ", id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", completionUrl='" + completionUrl + '\'' +
+                ", introUrl='" + introUrl + '\'' +
+                '}';
+    }
+
     private Course(CourseBuilder courseBuilder) {
         this.batchId = courseBuilder.batchId;
         this.id =  courseBuilder.id;

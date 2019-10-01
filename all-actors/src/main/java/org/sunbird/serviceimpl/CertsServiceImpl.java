@@ -61,6 +61,7 @@ public class CertsServiceImpl implements ICertService {
                 .setRecipientId((String)certReqAddMap.get(JsonKeys.USER_ID))
                 .setCourse(getCompositeCourseObject(certReqAddMap))
                 .build();
+        logger.info("CertsServiceImpl:getCertificate:certificate object formed: "+certificate);
         return certificate;
 
     }
@@ -73,6 +74,7 @@ public class CertsServiceImpl implements ICertService {
                 .setCompletionUrl((String)certAddRequestMap.get(JsonKeys.COMPLETION_URL))
                 .setIntroUrl((String)certAddRequestMap.get(JsonKeys.INTRO_URL))
                 .build();
+        logger.info("CertsServiceImpl:getCompositeCourseObject:certificate object formed: "+course);
         return course;
     }
 

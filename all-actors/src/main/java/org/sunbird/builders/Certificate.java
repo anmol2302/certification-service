@@ -77,6 +77,22 @@ public class Certificate {
         return isRevoked;
     }
 
+    @Override
+    public String toString() {
+        return "Certificate{" +
+                "id='" + id + '\'' +
+                ", pdfUrl='" + pdfUrl + '\'' +
+                ", jsonUrl='" + jsonUrl + '\'' +
+                ", recipientId='" + recipientId + '\'' +
+                ", certData=" + certData +
+                ", course=" + course +
+                ", createdBy='" + createdBy + '\'' +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", isRevoked=" + isRevoked +
+                ", accessCode='" + accessCode + '\'' +
+                '}';
+    }
+
     public static class CertificateBuilder{
 
 

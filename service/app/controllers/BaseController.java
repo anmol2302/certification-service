@@ -102,30 +102,6 @@ public class BaseController extends Controller {
             return RequestHandler.handleFailureResponse(ex, httpExecutionContext);
         }
     }
-    /**
-     * this method will take play.mv.http request and a validation function and lastly operation(Actor operation)
-     * this method is validating the request and ,
-     * it will map the request to our sunbird Request class and make a call to requestHandler which is internally calling ask to actor
-     * this method is used to handle all the request type which has requestBody
-     *
-     * @param req
-     * @param validatorFunction
-     * @param operation
-     * @return
-     */
-    public CompletionStage<Result> handleRequest(play.mvc.Http.Request req, RequestValidatorFunction validatorFunction, String operation) {
-        try {
-            Request request = (Request) RequestMapper.mapRequest(req, Request.class);
-            if (validatorFunction != null) {
-                validatorFunction.apply(request);
-            }
-            return new RequestHandler().handleRequest(request, httpExecutionContext, operation);
-        } catch (BaseException ex) {
-            return RequestHandler.handleFailureResponse(ex, httpExecutionContext);
-        } catch (Exception ex) {
-            return RequestHandler.handleFailureResponse(ex, httpExecutionContext);
-        }
-    }
 
     /**
      * this method is used to handle the only GET requests.

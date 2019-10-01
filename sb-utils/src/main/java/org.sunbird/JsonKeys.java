@@ -26,6 +26,10 @@ public class JsonKeys {
     public static final String IS_REVOKED = "isRevoked";
     public static final String RESPONSE="response";
     public static final String JSON_URL="jsonUrl";
+    public static final String CERT_ID="certId";
+    public static final String FILTERS="filters";
+    public static final String JSON = "json";
+    public static final String PDF = "pdf";
 
 
 }

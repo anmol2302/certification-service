@@ -8,7 +8,7 @@ import org.sunbird.service.ICertService;
 import org.sunbird.serviceimpl.CertsServiceImpl;
 
 @ActorConfig(
-        tasks = {"add"},
+        tasks = {"add","validate"},
         dispatcher = "",
         asyncTasks = {}
 )
@@ -18,7 +18,12 @@ public class Certification extends BaseActor {
     @Override
     public void onReceive(Request request) throws BaseException {
         logger.info("Certification:onReceive:request arrived with operation"+request.getOperation());
-        add(request);
+        if(ActorOperations.ADD.getOperation().equalsIgnoreCase(request.getOperation())){
+            add(request);
+        }
+        else if(ActorOperations.VALIDATE.getOperation().equalsIgnoreCase(request.getOperation())){
+            vaildate(request);
+        }
     }
     private void add(Request request) throws BaseException {
         String id=certService.add(request);
@@ -26,4 +31,8 @@ public class Certification extends BaseActor {
         response.put(JsonKeys.ID,id);
         sender().tell(response,self());
     }
+    private void vaildate(Request request) throws BaseException {
+        sender().tell(certService.validate(request),self());
+    }
+
 }

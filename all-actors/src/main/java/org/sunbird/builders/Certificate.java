@@ -20,6 +20,7 @@ public class Certificate {
     private String createdBy;
     private String updatedBy;
     private boolean isRevoked;
+    private String accessCode;
 
     public Certificate(){}
 
@@ -33,6 +34,11 @@ public class Certificate {
         this.createdBy = certificateBuilder.createdBy;
         this.updatedBy = certificateBuilder.updatedBy;
         this.isRevoked = certificateBuilder.isRevoked;
+        this.accessCode=certificateBuilder.accessCode;
+    }
+
+    public String getAccessCode() {
+        return accessCode;
     }
 
     public String getId() {
@@ -83,6 +89,12 @@ public class Certificate {
         private String createdBy;
         private String updatedBy;
         private boolean isRevoked;
+        private String accessCode;
+
+        public CertificateBuilder setAccessCode(String accessCode) {
+            this.accessCode = accessCode;
+            return this;
+        }
 
         public CertificateBuilder setId(String id) {
             this.id = id;

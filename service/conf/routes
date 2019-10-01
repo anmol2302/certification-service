@@ -10,4 +10,6 @@ GET  /health                                  @controllers.health.HealthControll
 # POST    /v1.3/system/log/update           @controllers.logsmanager.LogController.setLogLevel()
 
 POST  /certs/v1/add                         @controllers.CertificateController.add()
+POST  /certs/v1/validate                         @controllers.CertificateController.validate()
+
 

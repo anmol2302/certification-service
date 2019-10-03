@@ -130,7 +130,7 @@ public class CertsServiceImpl implements ICertService {
             logger.info("CertsServiceImpl:download:complete url found:" + apiToCall);
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Content-Type", "application/json");
-            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makePostCall(apiToCall,requestBody,headerMap);
+            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makeAsyncPostCall(apiToCall,requestBody,headerMap);
             HttpResponse<JsonNode> jsonResponse = responseFuture.get();
             if (jsonResponse != null && jsonResponse.getStatus() == 200) {
                 String signedUrl=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).getString(JsonKeys.SIGNED_URL);
@@ -158,10 +158,11 @@ public class CertsServiceImpl implements ICertService {
             logger.info("CertsServiceImpl:generate:complete url found:" + apiToCall);
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Content-Type", "application/json");
-            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makePostCall(apiToCall,requestBody,headerMap);
+            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makeAsyncPostCall(apiToCall,requestBody,headerMap);
             HttpResponse<JsonNode> jsonResponse = responseFuture.get();
             if (jsonResponse != null && jsonResponse.getStatus() == 200) {
-                List<Map<String,Object>> apiRespList=requestMapper.readValue(jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).get(JsonKeys.RESPONSE).toString(),List.class);
+                String stringifyResponse=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).get(JsonKeys.RESPONSE).toString();
+                List<Map<String,Object>> apiRespList=requestMapper.readValue(stringifyResponse,List.class);
                 response.put(JsonKeys.RESPONSE,apiRespList);
             } else {
                 throw new BaseException(IResponseMessage.INVALID_REQUESTED_DATA, MessageFormat.format(IResponseMessage.INVALID_PROVIDED_URL,"2222"), ResponseCode.CLIENT_ERROR.getCode());

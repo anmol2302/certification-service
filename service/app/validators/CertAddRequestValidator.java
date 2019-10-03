@@ -32,11 +32,11 @@ public class CertAddRequestValidator implements IRequestValidator {
     }
 
     private void validateMandatoryJsonData() throws BaseException {
-        validateDataType();
         if(MapUtils.isEmpty((Map)request.getRequest().get(JsonKeys.JSON_DATA))){
             logger.error("CertAddRequestValidator:validateMandatoryJsonData:incorrect request provided");
             throw new BaseException(IResponseMessage.INVALID_REQUESTED_DATA, MessageFormat.format(IResponseMessage.EMPTY_MANDATORY_PARAM,JsonKeys.JSON_DATA), ResponseCode.CLIENT_ERROR.getCode());
         }
+        validateDataType();
     }
     private void validateDataType() throws BaseException {
         if (!(request.get(JsonKeys.JSON_DATA) instanceof Map)) {

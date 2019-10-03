@@ -12,6 +12,13 @@ public class CertVars {
     private static Logger logger=Logger.getLogger(CertVars.class);
     private  static String SERVICE_BASE_URL="http://localhost:9100";
     private static String DOWNLOAD_URI= "/v1/user/certs/download";
+    private static String GENERATE_URI="/v1/certs/generate";
+
+
+    public static String getGenerateUri() {
+        return GENERATE_URI;
+    }
+
 
     public static String getSERVICE_BASE_URL() {
         return SERVICE_BASE_URL;

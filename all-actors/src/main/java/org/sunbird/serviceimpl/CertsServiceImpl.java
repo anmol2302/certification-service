@@ -20,6 +20,7 @@ import org.sunbird.utilities.CertificateUtil;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -119,8 +120,10 @@ public class CertsServiceImpl implements ICertService {
     public Response download(Request request) throws BaseException {
         Response response = new Response();
         try {
-            HashMap<String, Object> certReqMap = new HashMap<>();
-            certReqMap.put(JsonKeys.REQUEST, request.getRequest());
+            Map<String, Object> certReqMap = new HashMap<>();
+            Map<String,String>requestMap=new HashMap<>();
+            requestMap.put(JsonKeys.PDF_URL,(String)request.getRequest().get(JsonKeys.PDF_URL));
+            certReqMap.put(JsonKeys.REQUEST,requestMap);
             String requestBody = requestMapper.writeValueAsString(certReqMap);
             logger.info("CertsServiceImpl:download:request body found:" + requestBody);
             String apiToCall = CertVars.getSERVICE_BASE_URL().concat(CertVars.getDOWNLOAD_URI());
@@ -145,22 +148,21 @@ public class CertsServiceImpl implements ICertService {
 
     @Override
     public Response generate(Request request) throws BaseException {
-
         Response response = new Response();
         try {
-            HashMap<String, Object> certReqMap = new HashMap<>();
-            certReqMap.put(JsonKeys.REQUEST, request.getRequest());
+            Map<String, Object> certReqMap = new HashMap<>();
+            certReqMap.put(JsonKeys.REQUEST,request.getRequest());
             String requestBody = requestMapper.writeValueAsString(certReqMap);
             logger.info("CertsServiceImpl:generate:request body found:" + requestBody);
-            String apiToCall = CertVars.getSERVICE_BASE_URL().concat(CertVars.getDOWNLOAD_URI());
+            String apiToCall = CertVars.getSERVICE_BASE_URL().concat(CertVars.getGenerateUri());
             logger.info("CertsServiceImpl:generate:complete url found:" + apiToCall);
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Content-Type", "application/json");
             Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makePostCall(apiToCall,requestBody,headerMap);
             HttpResponse<JsonNode> jsonResponse = responseFuture.get();
             if (jsonResponse != null && jsonResponse.getStatus() == 200) {
-                String signedUrl=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).getString(JsonKeys.SIGNED_URL);
-                response.put(JsonKeys.SIGNED_URL,signedUrl);
+                List<Map<String,Object>> apiRespList=requestMapper.readValue(jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).get(JsonKeys.RESPONSE).toString(),List.class);
+                response.put(JsonKeys.RESPONSE,apiRespList);
             } else {
                 throw new BaseException(IResponseMessage.INVALID_REQUESTED_DATA, MessageFormat.format(IResponseMessage.INVALID_PROVIDED_URL,"2222"), ResponseCode.CLIENT_ERROR.getCode());
             }

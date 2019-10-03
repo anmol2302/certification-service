@@ -8,7 +8,8 @@ public enum ActorOperations {
 
     ADD("add"),
     VALIDATE("validate"),
-    DOWNLOAD("download");
+    DOWNLOAD("download"),
+    GENERATE("generate");
 
     private String operation;
 

@@ -57,11 +57,11 @@
 			<version>3.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-actor_2.11</artifactId>
-			<version>2.5.23</version>
-			<scope>compile</scope>
-		</dependency>
+		<groupId>com.typesafe.akka</groupId>
+		<artifactId>akka-actor_2.12</artifactId>
+		<version>${akka.x.version}</version>
+		<scope>compile</scope>
+	</dependency>
 	</dependencies>
 
 	<build>

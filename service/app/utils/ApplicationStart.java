@@ -28,9 +28,9 @@ public class ApplicationStart {
 	  	//instantiate actor system and initialize all the actors
 		  Application.getInstance().init();
 	    // Shut-down hook
-	    lifecycle.addStopHook(
-	        () -> {
-	          return CompletableFuture.completedFuture(null);
-	        });
+//	    lifecycle.addStopHook(
+//	        () -> {
+//	          return CompletableFuture.completedFuture(null);
+//	        });
 	  }
 }

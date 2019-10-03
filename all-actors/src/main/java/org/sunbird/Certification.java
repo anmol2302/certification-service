@@ -8,7 +8,7 @@ import org.sunbird.service.ICertService;
 import org.sunbird.serviceimpl.CertsServiceImpl;
 
 @ActorConfig(
-        tasks = {"add","validate","download"},
+        tasks = {"add","validate","download","generate"},
         dispatcher = "",
         asyncTasks = {}
 )
@@ -29,6 +29,10 @@ public class Certification extends BaseActor {
         {
             download(request);
         }
+        else if(ActorOperations.GENERATE.getOperation().equalsIgnoreCase(request.getOperation()))
+        {
+            generate(request);
+        }
     }
 
     private void add(Request request) throws BaseException {
@@ -48,6 +52,7 @@ public class Certification extends BaseActor {
 
     }
 
-
-
+    private void generate(Request request) throws BaseException {
+        sender().tell(certService.generate(request),self());
+    }
 }

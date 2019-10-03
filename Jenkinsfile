@@ -38,14 +38,14 @@ node('build-slave') {
                 sh 'git log -1'
 	
 		sh "cd $currentDir"
-		// Build the dependencies for sunbird user-org service
+		// Build the dependencies for sunbird certification-service
                 sh 'mvn clean install'
             }
             stage('Package') {
 		// Create a deployment package
-                dir('play-service') {
+                dir('service') {
                     sh 'mvn play2:dist'
-		    sh 'cp target/play-service-1.0.0-dist.zip ../'
+		    sh 'cp target/service-1.0.0-SNAPSHOT-dist.zip ../'
                 }
                 sh('chmod 777 ./build.sh')
                 sh("./build.sh ${build_tag} ${env.NODE_NAME} ${hub_org}")

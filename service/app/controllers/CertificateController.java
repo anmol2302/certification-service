@@ -2,10 +2,7 @@ package controllers;
 
 import org.sunbird.JsonKeys;
 import play.mvc.Result;
-import validators.CertAddRequestValidator;
-import validators.CertDownloadRequestValidator;
-import validators.CertValidateRequestValidator;
-import validators.IRequestValidator;
+import validators.*;
 
 import java.util.concurrent.CompletionStage;
 
@@ -43,4 +40,13 @@ public class CertificateController extends BaseController {
         return handleRequest(request(),requestValidator, JsonKeys.CERT_DOWNLOAD);
     }
 
+    /**
+     * this action method will be called for generating certificate
+     * @return CompletionStage of Result
+     */
+    public CompletionStage<Result> generate()
+    {
+        IRequestValidator requestValidator=new CertGenerateValidator();
+        return handleRequest(request(),requestValidator, JsonKeys.CERTS_GENERATE);
+    }
 }

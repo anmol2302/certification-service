@@ -11,6 +11,8 @@ GET  /health                                  @controllers.health.HealthControll
 POST  /certs/v1/add                          @controllers.CertificateController.add()
 POST  /certs/v1/validate                     @controllers.CertificateController.validate()
 POST  /certs/v1/download                     @controllers.CertificateController.download()
+POST  /certs/v1/generate                     @controllers.CertificateController.generate()
+
 
 
 

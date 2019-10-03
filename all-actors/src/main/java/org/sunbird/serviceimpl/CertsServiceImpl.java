@@ -3,7 +3,6 @@ package org.sunbird.serviceimpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -139,6 +138,35 @@ public class CertsServiceImpl implements ICertService {
 
         } catch (Exception e) {
             logger.error("CertsServiceImpl:download:exception occurred:" + e);
+            throw new BaseException(IResponseMessage.INTERNAL_ERROR, IResponseMessage.INTERNAL_ERROR, ResponseCode.SERVER_ERROR.getCode());
+        }
+        return response;
+    }
+
+    @Override
+    public Response generate(Request request) throws BaseException {
+
+        Response response = new Response();
+        try {
+            HashMap<String, Object> certReqMap = new HashMap<>();
+            certReqMap.put(JsonKeys.REQUEST, request.getRequest());
+            String requestBody = requestMapper.writeValueAsString(certReqMap);
+            logger.info("CertsServiceImpl:generate:request body found:" + requestBody);
+            String apiToCall = CertVars.getSERVICE_BASE_URL().concat(CertVars.getDOWNLOAD_URI());
+            logger.info("CertsServiceImpl:generate:complete url found:" + apiToCall);
+            Map<String, String> headerMap = new HashMap<>();
+            headerMap.put("Content-Type", "application/json");
+            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makePostCall(apiToCall,requestBody,headerMap);
+            HttpResponse<JsonNode> jsonResponse = responseFuture.get();
+            if (jsonResponse != null && jsonResponse.getStatus() == 200) {
+                String signedUrl=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).getString(JsonKeys.SIGNED_URL);
+                response.put(JsonKeys.SIGNED_URL,signedUrl);
+            } else {
+                throw new BaseException(IResponseMessage.INVALID_REQUESTED_DATA, MessageFormat.format(IResponseMessage.INVALID_PROVIDED_URL,"2222"), ResponseCode.CLIENT_ERROR.getCode());
+            }
+
+        } catch (Exception e) {
+            logger.error("CertsServiceImpl:generate:exception occurred:" + e);
             throw new BaseException(IResponseMessage.INTERNAL_ERROR, IResponseMessage.INTERNAL_ERROR, ResponseCode.SERVER_ERROR.getCode());
         }
         return response;

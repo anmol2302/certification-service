@@ -30,6 +30,8 @@ public class JsonKeys {
     public static final String FILTERS="filters";
     public static final String JSON = "json";
     public static final String PDF = "pdf";
+    public static final String SIGNED_URL="signedUrl";
+    public static final String RESULT="result";
 
 
 }

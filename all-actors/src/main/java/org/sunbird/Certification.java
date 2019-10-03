@@ -8,31 +8,46 @@ import org.sunbird.service.ICertService;
 import org.sunbird.serviceimpl.CertsServiceImpl;
 
 @ActorConfig(
-        tasks = {"add","validate"},
+        tasks = {"add","validate","download"},
         dispatcher = "",
         asyncTasks = {}
 )
 public class Certification extends BaseActor {
     static Logger logger = Logger.getLogger(Certification.class);
-    private static ICertService certService=new CertsServiceImpl();
+    private static ICertService certService = new CertsServiceImpl();
+
     @Override
     public void onReceive(Request request) throws BaseException {
-        logger.info("Certification:onReceive:request arrived with operation"+request.getOperation());
-        if(ActorOperations.ADD.getOperation().equalsIgnoreCase(request.getOperation())){
+        logger.info("Certification:onReceive:request arrived with operation" + request.getOperation());
+        if (ActorOperations.ADD.getOperation().equalsIgnoreCase(request.getOperation())) {
             add(request);
+        } else if (ActorOperations.VALIDATE.getOperation().equalsIgnoreCase(request.getOperation()))
+        {
+            validate(request);
         }
-        else if(ActorOperations.VALIDATE.getOperation().equalsIgnoreCase(request.getOperation())){
-            vaildate(request);
+        else if(ActorOperations.DOWNLOAD.getOperation().equalsIgnoreCase(request.getOperation()))
+        {
+            download(request);
         }
     }
+
     private void add(Request request) throws BaseException {
-        String id=certService.add(request);
-        Response response=new Response();
-        response.put(JsonKeys.ID,id);
-        sender().tell(response,self());
+        String id = certService.add(request);
+        Response response = new Response();
+        response.put(JsonKeys.ID, id);
+        sender().tell(response, self());
     }
-    private void vaildate(Request request) throws BaseException {
-        sender().tell(certService.validate(request),self());
+
+    private void validate(Request request) throws BaseException {
+        sender().tell(certService.validate(request), self());
     }
+
+    private void download(Request request) throws BaseException
+    {
+        sender().tell(certService.download(request),self());
+
+    }
+
+
 
 }

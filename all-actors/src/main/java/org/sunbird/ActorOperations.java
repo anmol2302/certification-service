@@ -7,7 +7,9 @@ package org.sunbird;
 public enum ActorOperations {
 
     ADD("add"),
-    VALIDATE("validate");
+    VALIDATE("validate"),
+    DOWNLOAD("download");
+
     private String operation;
 
     ActorOperations(String operation) {

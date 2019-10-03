@@ -15,5 +15,7 @@ public interface ICertService{
 
     Response  validate(Request request) throws BaseException;
 
+    Response download(Request request) throws BaseException;
+
 
 }

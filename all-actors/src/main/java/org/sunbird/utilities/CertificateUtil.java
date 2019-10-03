@@ -3,12 +3,10 @@ package org.sunbird.utilities;
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.sunbird.JsonKeys;
-import org.sunbird.builders.Certificate;
 import org.sunbird.common.ElasticSearchHelper;
 import org.sunbird.common.factory.EsClientFactory;
 import org.sunbird.common.inf.ElasticSearchService;
 import org.sunbird.dto.SearchDTO;
-import org.sunbird.response.Response;
 
 import java.util.Map;
 

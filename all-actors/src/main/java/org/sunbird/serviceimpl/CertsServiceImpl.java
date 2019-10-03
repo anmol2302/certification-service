@@ -1,10 +1,14 @@
 package org.sunbird.serviceimpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sunbird.BaseException;
+import org.sunbird.CertVars;
 import org.sunbird.JsonKeys;
 import org.sunbird.builders.Certificate;
 import org.sunbird.builders.Course;
@@ -105,9 +109,40 @@ public class CertsServiceImpl implements ICertService {
         }
 
     }
-
     private Certificate getCertObject(Map<String,Object>esCertMap){
         Certificate certificate=requestMapper.convertValue(esCertMap,Certificate.class);
         return certificate;
+    }
+
+
+    @Override
+    public Response download(Request request) throws BaseException {
+        Response response = new Response();
+        try {
+            HashMap<String, Object> certReqMap = new HashMap<>();
+            certReqMap.put(JsonKeys.REQUEST, request.getRequest());
+            String requestBody = requestMapper.writeValueAsString(certReqMap);
+            logger.info("CertsServiceImpl:download:request body found:" + requestBody);
+            String apiToCall = CertVars.getSERVICE_BASE_URL().concat(CertVars.getDOWNLOAD_URI());
+            logger.info("CertsServiceImpl:download:complete url found:" + apiToCall);
+            Map<String, String> headerMap = new HashMap<>();
+            headerMap.put("Content-Type", "application/json");
+            HttpResponse<JsonNode> jsonResponse
+                    = Unirest.post(apiToCall)
+                    .headers(headerMap)
+                    .body(requestBody)
+                    .asJson();
+            if (jsonResponse != null && jsonResponse.getStatus() == 200) {
+                String signedUrl=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).getString(JsonKeys.SIGNED_URL);
+                response.put(JsonKeys.SIGNED_URL,signedUrl);
+            } else {
+                throw new BaseException(IResponseMessage.INVALID_REQUESTED_DATA, MessageFormat.format(IResponseMessage.INVALID_PROVIDED_URL,"2222"), ResponseCode.CLIENT_ERROR.getCode());
+            }
+
+        } catch (Exception e) {
+            logger.error("CertsServiceImpl:download:exception occurred:" + e);
+            throw new BaseException(IResponseMessage.INTERNAL_ERROR, IResponseMessage.INTERNAL_ERROR, ResponseCode.SERVER_ERROR.getCode());
+        }
+        return response;
     }
 }

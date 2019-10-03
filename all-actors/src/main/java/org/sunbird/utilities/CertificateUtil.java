@@ -1,5 +1,8 @@
 package org.sunbird.utilities;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.sunbird.JsonKeys;
@@ -9,6 +12,7 @@ import org.sunbird.common.inf.ElasticSearchService;
 import org.sunbird.dto.SearchDTO;
 
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public class CertificateUtil {
     private static ElasticSearchService elasticSearchService= EsClientFactory.getInstance();
@@ -43,4 +47,13 @@ public class CertificateUtil {
         logger.info("CertificateUtil:isIdPresent:got response from ES:"+response);
         return response;
     }
+
+    public static Future<HttpResponse<JsonNode>> makePostCall(String apiToCall,String requestBody,Map<String,String>headerMap){
+            Future<HttpResponse<JsonNode>> jsonResponse
+                    = Unirest.post(apiToCall)
+                    .headers(headerMap)
+                    .body(requestBody)
+                    .asJsonAsync();
+            return jsonResponse;
+        }
 }

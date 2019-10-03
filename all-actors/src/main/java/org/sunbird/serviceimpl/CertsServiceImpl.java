@@ -22,6 +22,7 @@ import org.sunbird.utilities.CertificateUtil;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public class CertsServiceImpl implements ICertService {
     static Logger logger = Logger.getLogger(CertsServiceImpl.class);
@@ -127,11 +128,8 @@ public class CertsServiceImpl implements ICertService {
             logger.info("CertsServiceImpl:download:complete url found:" + apiToCall);
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Content-Type", "application/json");
-            HttpResponse<JsonNode> jsonResponse
-                    = Unirest.post(apiToCall)
-                    .headers(headerMap)
-                    .body(requestBody)
-                    .asJson();
+            Future<HttpResponse<JsonNode>>responseFuture=CertificateUtil.makePostCall(apiToCall,requestBody,headerMap);
+            HttpResponse<JsonNode> jsonResponse = responseFuture.get();
             if (jsonResponse != null && jsonResponse.getStatus() == 200) {
                 String signedUrl=jsonResponse.getBody().getObject().getJSONObject(JsonKeys.RESULT).getString(JsonKeys.SIGNED_URL);
                 response.put(JsonKeys.SIGNED_URL,signedUrl);

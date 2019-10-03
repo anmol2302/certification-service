@@ -42,7 +42,7 @@
     "rawData": {
       "type": "object"
     },
-    "recipientId": {
+    "recipientName": {
       "type": "text",
       "fields": {
         "raw": {

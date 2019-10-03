@@ -62,7 +62,7 @@ public class CertsServiceImpl implements ICertService {
                 .setRevoked(false)
                 .setAccessCode((String)certReqAddMap.get(JsonKeys.ACCESS_CODE))
                 .setJsonUrl((String)certReqAddMap.get(JsonKeys.JSON_URL))
-                .setRecipientId((String)certReqAddMap.get(JsonKeys.USER_ID))
+                .setRecipientName((String)certReqAddMap.get(JsonKeys.USER_ID))
                 .setCourse(getCompositeCourseObject(certReqAddMap))
                 .build();
         logger.info("CertsServiceImpl:getCertificate:certificate object formed: "+certificate);

@@ -23,7 +23,6 @@ public class CertGenerateValidator implements IRequestValidator{
     private Request request;
     @Override
     public void validate(Request request) throws BaseException {
-
         this.request=request;
         validateGenerateCertRequest(request);
     }

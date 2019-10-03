@@ -14,7 +14,7 @@ public class Certificate {
     private String id;
     private String pdfUrl;
     private String jsonUrl;
-    private String recipientId;
+    private String recipientName;
     private Map<String, Object> certData;
     private Course course;
     private String createdBy;
@@ -28,7 +28,7 @@ public class Certificate {
         this.id = certificateBuilder.id;
         this.pdfUrl = certificateBuilder.pdfUrl;
         this.jsonUrl = certificateBuilder.jsonUrl;
-        this.recipientId = certificateBuilder.recipientId;
+        this.recipientName = certificateBuilder.recipientName;
         this.certData = certificateBuilder.certData;
         this.course = certificateBuilder.course;
         this.createdBy = certificateBuilder.createdBy;
@@ -39,6 +39,10 @@ public class Certificate {
 
     public String getAccessCode() {
         return accessCode;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
     }
 
     public String getId() {
@@ -53,9 +57,6 @@ public class Certificate {
         return jsonUrl;
     }
 
-    public String getRecipientId() {
-        return recipientId;
-    }
 
     public Map<String, Object> getCertData() {
         return certData;
@@ -83,7 +84,7 @@ public class Certificate {
                 "id='" + id + '\'' +
                 ", pdfUrl='" + pdfUrl + '\'' +
                 ", jsonUrl='" + jsonUrl + '\'' +
-                ", recipientId='" + recipientId + '\'' +
+                ", recipientId='" + recipientName + '\'' +
                 ", certData=" + certData +
                 ", course=" + course +
                 ", createdBy='" + createdBy + '\'' +
@@ -99,13 +100,19 @@ public class Certificate {
         private String id;
         private String pdfUrl;
         private String jsonUrl;
-        private String recipientId;
+        private String recipientName;
         private Map<String, Object> certData;
         private Course course;
         private String createdBy;
         private String updatedBy;
         private boolean isRevoked;
         private String accessCode;
+
+
+        public CertificateBuilder setRecipientName(String recipientName) {
+            this.recipientName = recipientName;
+            return this;
+        }
 
         public CertificateBuilder setAccessCode(String accessCode) {
             this.accessCode = accessCode;
@@ -125,12 +132,6 @@ public class Certificate {
 
         public CertificateBuilder setJsonUrl(String jsonUrl) {
             this.jsonUrl = jsonUrl;
-            return this;
-
-        }
-
-        public CertificateBuilder setRecipientId(String recipientId) {
-            this.recipientId = recipientId;
             return this;
 
         }
